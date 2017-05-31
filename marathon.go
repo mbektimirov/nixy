@@ -358,10 +358,12 @@ func writeConf() error {
 		return err
 	}
 	config.LastUpdates.LastConfigRendered = time.Now()
-	err = checkConf(tmpFile.Name())
-	if err != nil {
-		return err
-	}
+
+	// err = checkConf(tmpFile.Name())
+	// if err != nil {
+	// 	return err
+	// }
+
 	err = os.Rename(tmpFile.Name(), config.Nginx_config)
 	if err != nil {
 		return err

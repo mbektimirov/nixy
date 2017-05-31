@@ -138,15 +138,17 @@ func nixy_health(w http.ResponseWriter, r *http.Request) {
 		health.Template.Message = "OK"
 		health.Template.Healthy = true
 	}
-	err = checkConf(config.Nginx_config)
-	if err != nil {
-		health.Config.Message = err.Error()
-		health.Config.Healthy = false
-		w.WriteHeader(http.StatusInternalServerError)
-	} else {
-		health.Config.Message = "OK"
-		health.Config.Healthy = true
-	}
+
+	// err = checkConf(config.Nginx_config)
+	// if err != nil {
+	// 	health.Config.Message = err.Error()
+	// 	health.Config.Healthy = false
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// } else {
+	// 	health.Config.Message = "OK"
+	// 	health.Config.Healthy = true
+	// }
+
 	all_backends_down := true;
 	for _, endpoint := range health.Endpoints {
 		if (endpoint.Healthy) {
