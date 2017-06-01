@@ -16,3 +16,5 @@ _testmain.go
 
 # Vim's swap
 *.sw[a-z]
+
+*.tar.gz
