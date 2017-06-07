@@ -52,6 +52,7 @@ type Config struct {
 	Left_delimiter 	string   `json:"{{"`
 	Right_delimiter string   `json:"}}"`
 	Nginx_cmd      	string   `json:"-"`
+  Subdomain_key   string   `json:"-"`
 	Statsd         	StatsdConfig
 	LastUpdates    	Updates
 	Apps           	map[string]App

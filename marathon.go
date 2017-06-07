@@ -234,6 +234,16 @@ func fetchApps(jsonapps *MarathonApps) error {
 	return nil
 }
 
+func getHosts(hostsStr string) []string {
+  var hosts []string
+
+  for _, host := range strings.Split(hostsStr, " ") {
+    hosts = append(hosts, host)
+  }
+
+  return hosts;
+}
+
 func syncApps(jsonapps *MarathonApps) bool {
 	config.Lock()
 	defer config.Unlock()
@@ -274,17 +284,12 @@ func syncApps(jsonapps *MarathonApps) bool {
 		// Lets ignore apps if no tasks are available
 		if len(newapp.Tasks) > 0 {
 			if s, ok := app.Labels["subdomain"]; ok {
-				hosts := strings.Split(s, " ")
-				for _, host := range hosts {
-					newapp.Hosts = append(newapp.Hosts, host)
-				}
+        newapp.Hosts = getHosts(s);
 			} else if s, ok := app.Labels["moxy_subdomain"]; ok {
-				// to be compatible with moxy
-				hosts := strings.Split(s, " ")
-				for _, host := range hosts {
-					newapp.Hosts = append(newapp.Hosts, host)
-				}
-			} else {
+				newapp.Hosts = getHosts(s);
+			} else if s, ok := app.Labels[config.Subdomain_key]; ok {
+        newapp.Hosts = getHosts(s);
+      } else {
 				// If directories are used lets use them as subdomain dividers.
 				// Ex: /project/app becomes app.project
 				// Ex: /app becomes just app

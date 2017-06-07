@@ -1,4 +1,4 @@
-biuld:
+build:
 	go build
 
 build-linux:
